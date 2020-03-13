@@ -1,2 +1,1 @@
-# NariBot
-bot para discord
+EL FAMOSO NARIBOT
