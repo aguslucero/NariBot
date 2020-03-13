@@ -47,7 +47,7 @@ client.on("message", async (message: Message) => {
         discordUser.removeRole(role2750)
         discordUser.removeRole(role2900)
         discordUser.removeRole(role3000)
-        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + "rango asignado -> 2000+");
+        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + ", rango asignado -> 2000+");
 
       }
       if ((score >= 2500) && (score < 2750)) { 
@@ -56,7 +56,7 @@ client.on("message", async (message: Message) => {
         discordUser.removeRole(role2750)
         discordUser.removeRole(role2900)
         discordUser.removeRole(role3000)
-        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + "rango asignado -> 2500+");
+        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + ", rango asignado -> 2500+");
       }
       if ((score >= 2750) && (score < 2900)) { 
         discordUser.addRole(role2750);
@@ -64,7 +64,7 @@ client.on("message", async (message: Message) => {
         discordUser.removeRole(role2000)
         discordUser.removeRole(role2900)
         discordUser.removeRole(role3000)
-        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + "rango asignado -> 2750+");
+        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + ", rango asignado -> 2750+");
       }
       if ((score >= 2900) && (score < 3000)) { 
         discordUser.addRole(role2900);
@@ -72,7 +72,7 @@ client.on("message", async (message: Message) => {
         discordUser.removeRole(role2750)
         discordUser.removeRole(role2000)
         discordUser.removeRole(role3000)
-        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + "rango asignado -> 2900+");
+        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + ", rango asignado -> 2900+");
       }
 
       if (score >= 3000) { 
@@ -81,7 +81,7 @@ client.on("message", async (message: Message) => {
         discordUser.removeRole(role2750)
         discordUser.removeRole(role2900)
         discordUser.removeRole(role2000)
-        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + "rango asignado -> 3000+");
+        message.channel.send( discordUser +" Rango actualizado correctamente. Score actual "+ score + ", rango asignado -> 3000+");
 
       }
     })
