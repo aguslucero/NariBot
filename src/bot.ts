@@ -63,7 +63,7 @@ client.on("message", async (message: Message) => {
       message.channel.send(discordUser + ' Recluta, debe pagar '+ aPagar + ' a la mafia')
       newSaldo = venta2 + aPagar
     } 
-    bolsaChannel.setName(newSaldo.toString())
+    bolsaChannel.edit({name: newSaldo.toString()})
     
 
   }}
@@ -71,7 +71,7 @@ client.on("message", async (message: Message) => {
   if (message.content.startsWith('!bolsa=')) { 
     let newSaldo =  message.content.match(regex)?.toString();
     if( newSaldo) {
-      bolsaChannel.setName(newSaldo)
+      bolsaChannel.edit({name: newSaldo.toString()})
       message.channel.send('bolsa actualizada nuevo valor'+ newSaldo.toString())
     }
     
@@ -82,7 +82,7 @@ client.on("message", async (message: Message) => {
     let restar =  message.content.match(regex)?.toString();
     if( restar) {
      newSaldo = bolsaActual - parseInt(restar);
-     bolsaChannel.setName(newSaldo.toString())
+     bolsaChannel.edit({name: newSaldo.toString()})
      message.channel.send('bolsa actualizada nuevo valor'+ newSaldo.toString())
      console.log(newSaldo)
     }
