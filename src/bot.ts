@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config();
 
-import { Client, Message } from "discord.js";
+import { Client, Message, TextChannel } from "discord.js";
 import { prefix } from "./config.json";
 import axios from 'axios';
 import { ProcessEnvOptions } from "child_process";
@@ -23,16 +23,21 @@ client.once("ready", () => {
 
 
 client.on("message", async (message: Message) => {
-  let bolsaChannel = message.guild.channels.find(x => x.id === '722684170811473972');
+  let bolsaChannel = message.guild.channels.find(x => x.id === "723311059200639047") as TextChannel
     let discordUser = message.member
     var regex = /(\d+)/g;
     let aPagar = 0;
-    let bolsaActual = parseInt(bolsaChannel.name);
-
-  if (message.content.startsWith('!+')) {
-    
+    let bolsaActual = 0;
+if(bolsaChannel) {
+    if (message.content.startsWith('!+')) {  
+     await bolsaChannel.fetchMessages({ limit: 1 }).then(messages => {
+        messages.forEach(function( msj) {
+          let actual = msj.content.match(regex)?.toString()
+          if(actual) {
+          bolsaActual = parseInt(actual)
+          console.log('bolsa', bolsaActual)
+          }})})
     let venta =  message.content.match(regex)?.toString();
-    let venta2 = 0
     let newSaldo = 0
     if(venta){
      let venta2 = parseInt(venta);
@@ -41,57 +46,75 @@ client.on("message", async (message: Message) => {
     if(discordUser.roles.find( role => role.name === "𝓟𝓻𝓮𝓼𝓲𝓭𝓮𝓷𝓽𝓮")) {
       aPagar = venta2 * 0.1;
       message.channel.send(discordUser + ' Presidente debe pagar '+ aPagar + ' a la mafia')
-      newSaldo = venta2 + aPagar
+      newSaldo = bolsaActual + aPagar
     } 
     if(discordUser.roles.find( role => role.name === "𝓥𝓲𝓬𝓮𝓹𝓻𝓮𝓼𝓲𝓭𝓮𝓷𝓽𝓮")) {
       aPagar = venta2 * 0.2;
       message.channel.send(discordUser + ' Vicepresidente debe pagar '+ aPagar + ' a la mafia')
-      newSaldo = venta2 + aPagar
+      newSaldo = bolsaActual + aPagar
     } 
     if(discordUser.roles.find( role => role.name === "𝓖𝓮𝓻𝓮𝓷𝓽𝓮")) {
       aPagar = venta2 * 0.3;
       message.channel.send(discordUser + ' Gerente, debe pagar '+ aPagar + ' a la mafia')
-      newSaldo = venta2 + aPagar
-    } 
+      newSaldo = bolsaActual + aPagar
+    }
     if(discordUser.roles.find( role => role.name === "𝓢𝓲𝓬𝓪𝓻𝓲𝓸")) {
       aPagar = venta2 * 0.4;
       message.channel.send(discordUser + ' Sicario, debe pagar '+ aPagar + ' a la mafia')
-      newSaldo = venta2 + aPagar
+      newSaldo = bolsaActual + aPagar
     } 
     if(discordUser.roles.find( role => role.name === "𝓡𝓮𝓬𝓵𝓾𝓽𝓪")) {
       aPagar = venta2 * 0.5;
       message.channel.send(discordUser + ' Recluta, debe pagar '+ aPagar + ' a la mafia')
-      newSaldo = venta2 + aPagar
+      newSaldo = bolsaActual + aPagar
     } 
-    bolsaChannel.edit({name: newSaldo.toString()})
+    let deleted = await bolsaChannel.fetchMessages({limit: 99});
+     bolsaChannel.bulkDelete(deleted);  
+    bolsaChannel.send("FONDOS DE LA MAFIA = $"+ newSaldo.toString())
     
 
-  }}
+    }}
 
   if (message.content.startsWith('!bolsa=')) { 
+    await bolsaChannel.fetchMessages({ limit: 1 }).then(messages => {
+      messages.forEach(function( msj) {
+        let actual = msj.content.match(regex)?.toString()
+        if(actual) {
+        bolsaActual = parseInt(actual)
+        console.log('bolsa', bolsaActual)
+        }})})
     let newSaldo =  message.content.match(regex)?.toString();
     if( newSaldo) {
-      bolsaChannel.edit({name: newSaldo.toString()})
-      message.channel.send('bolsa actualizada nuevo valor'+ newSaldo.toString())
+      let deleted = await bolsaChannel.fetchMessages({limit: 99});
+     bolsaChannel.bulkDelete(deleted);  
+      bolsaChannel.send("FONDOS DE LA MAFIA = $"+ newSaldo.toString())
+      message.channel.send('bolsa actualizada nuevo valor '+ newSaldo.toString())
     }
     
   }
 
   if (message.content.startsWith('!bolsa-')) { 
+    await bolsaChannel.fetchMessages({ limit: 1 }).then(messages => {
+      messages.forEach(function( msj) {
+        let actual = msj.content.match(regex)?.toString()
+        if(actual) {
+        bolsaActual = parseInt(actual)
+        console.log('bolsa', bolsaActual)
+        }})})
     let newSaldo = 0
     let restar =  message.content.match(regex)?.toString();
     if( restar) {
      newSaldo = bolsaActual - parseInt(restar);
-     bolsaChannel.edit({name: newSaldo.toString()})
-     message.channel.send('bolsa actualizada nuevo valor'+ newSaldo.toString())
-     console.log(newSaldo)
+     let deleted = await bolsaChannel.fetchMessages({limit: 99});
+     bolsaChannel.bulkDelete(deleted);  
+     bolsaChannel.send("FONDOS DE LA MAFIA = $"+ newSaldo.toString())
+     message.channel.send('bolsa actualizada nuevo valor '+ newSaldo.toString())
     }
   }
  
-
+}
 
 });
-
 client.login(process.env.TOKEN);
 
 
